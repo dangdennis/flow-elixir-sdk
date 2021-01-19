@@ -1,8 +1,18 @@
 # FlowEx
 
-Elixir SDK for the Flow blockchain
+Elixir SDK for the Flow blockchain.
 
-**TODO: Add description**
+## Inspiration
+I desired to build an Elixir app without requiring a Node or Go server sitting in between the blockchain and my main workhorse. 
+
+https://www.onflow.org/post/interact-with-flow-using-ruby
+
+## Short-term goals 
+1. Send signed Cadence transactions and scripts to Flow via its gprc gateway.
+2. Listen to Flow events
+
+## Long-term goals
+Meet feature parity with JS and Go SDK as necessary.
 
 ## Installation
 
