@@ -16,6 +16,9 @@ Meet feature parity with JS and Go SDK as necessary.
 
 ## Installation
 
+1. Run `git submodule init` initialize the git submodule.
+2. Run `git submodule update --remote` to pull the latest commit (though we expect the contracts to infrequently if ever change).
+
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed
 by adding `flow_ex` to your list of dependencies in `mix.exs`:
 
