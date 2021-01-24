@@ -4,8 +4,8 @@ Elixir SDK for the Flow blockchain. For those that desire to build an Elixir app
 
 Short term goals:
 
-1. Send signed Cadence transactions and scripts to Flow via its gprc gateway.
-2. Listen to Flow events
+1. Read-only operations: i.e. send Cadence scripts to Flow via its gprc gateway.
+2. Listen to Flow events.
 
 Long term goals:
 
