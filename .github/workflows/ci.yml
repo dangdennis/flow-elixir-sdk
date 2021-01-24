@@ -18,7 +18,6 @@ jobs:
 
             - name: Run Flow emulator
               run: docker-compose up -d
-              working-directory: lib/js
 
             - uses: erlef/setup-elixir@v1
               with:
