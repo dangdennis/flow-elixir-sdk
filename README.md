@@ -25,8 +25,12 @@ I desired to build an Elixir app without requiring a Node or Go server sitting i
 
 ## Helpful Resources
 
+https://github.com/elixir-grpc/grpc/tree/master/examples
+https://github.com/elixir-grpc/grpc/blob/master/examples/helloworld/priv/client.exs
 https://www.onflow.org/post/interact-with-flow-using-ruby
+https://github.com/elixir-grpc/grpc
 https://github.com/elixir-protobuf/protobuf
+
 
 ## Short-term goals
 
