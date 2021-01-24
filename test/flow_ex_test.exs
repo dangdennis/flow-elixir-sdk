@@ -2,7 +2,8 @@ defmodule FlowExTest do
   use ExUnit.Case
   doctest FlowEx
 
-  test "greets the world" do
-    assert FlowEx.hello() == :world
+  test "pings Flow" do
+    assert {:ok, %Flow.Access.PingResponse{}} ==
+             FlowEx.new(%{endpoint: "localhost:3569"}) |> FlowEx.ping()
   end
 end

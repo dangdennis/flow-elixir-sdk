@@ -8,15 +8,12 @@ defmodule FlowEx do
   @doc """
   Create a connection
   """
-  def new() do
+  def new(%{:endpoint => endpoint}) when is_binary(endpoint) do
+    {:ok, channel} = GRPC.Stub.connect(endpoint, interceptors: [GRPC.Logger.Client])
+    channel
   end
 
-  def ping() do
-    # Am I supposed to store channels? If so, must use a genserver
-    {:ok, channel} = GRPC.Stub.connect("localhost:3569", interceptors: [GRPC.Logger.Client])
-
-    IO.inspect(channel)
-
+  def ping(channel) do
     Flow.Access.AccessAPI.Stub.ping(channel, Flow.Access.PingRequest.new()) |> IO.inspect()
   end
 end
