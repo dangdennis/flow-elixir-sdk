@@ -1,6 +1,16 @@
 # FlowEx
 
-Elixir SDK for the Flow blockchain.
+Elixir SDK for the Flow blockchain. For those that desire to build an Elixir app without requiring a Node or Go server sitting in between their blockchain and favorite server language.
+
+Short term goals:
+
+1. Send signed Cadence transactions and scripts to Flow via its gprc gateway.
+2. Listen to Flow events
+
+Long term goals:
+
+1. Encrypt and send transactions
+2. Meet feature parity with JS and Go SDK as necessary.
 
 ## Installation
 
@@ -19,27 +29,13 @@ Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_do
 and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
 be found at [https://hexdocs.pm/flow_ex](https://hexdocs.pm/flow_ex).
 
-## Inspiration
+## Learning Resources
 
-I desired to build an Elixir app without requiring a Node or Go server sitting in between the blockchain and my main workhorse.
-
-## Helpful Resources
-
-https://github.com/elixir-grpc/grpc/tree/master/examples
-https://github.com/elixir-grpc/grpc/blob/master/examples/helloworld/priv/client.exs
-https://www.onflow.org/post/interact-with-flow-using-ruby
-https://github.com/elixir-grpc/grpc
-https://github.com/elixir-protobuf/protobuf
-
-
-## Short-term goals
-
-1. Send signed Cadence transactions and scripts to Flow via its gprc gateway.
-2. Listen to Flow events
-
-## Long-term goals
-
-Meet feature parity with JS and Go SDK as necessary.
+-   https://github.com/elixir-grpc/grpc/tree/master/examples
+-   https://github.com/elixir-grpc/grpc/blob/master/examples/helloworld/priv/client.exs
+-   https://www.onflow.org/post/interact-with-flow-using-ruby
+-   https://github.com/elixir-grpc/grpc
+-   https://github.com/elixir-protobuf/protobuf
 
 ## Development
 
