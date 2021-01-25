@@ -5,15 +5,35 @@ defmodule FlowEx do
   Documentation for `FlowEx`.
   """
 
+  @spec new(%{url: binary}) :: GRPC.Channel.t()
   @doc """
   Create a connection
   """
-  def new(%{:endpoint => endpoint}) when is_binary(endpoint) do
-    {:ok, channel} = GRPC.Stub.connect(endpoint, interceptors: [GRPC.Logger.Client])
+  def new(%{:url => url}) when is_binary(url) do
+    {:ok, channel} = GRPC.Stub.connect(url, interceptors: [GRPC.Logger.Client])
     channel
   end
 
+  @spec ping(GRPC.Channel.t()) ::
+          {:error, GRPC.RPCError.t()} | {:ok, any} | {:ok, any, map} | GRPC.Client.Stream.t()
   def ping(channel) do
-    Flow.Access.AccessAPI.Stub.ping(channel, Flow.Access.PingRequest.new()) |> IO.inspect()
+    Flow.Access.AccessAPI.Stub.ping(channel, Flow.Access.PingRequest.new())
+  end
+
+  def get_account(channel, address) when is_binary(address) do
+    # query latest block height
+
+    Flow.Access.AccessAPI.Stub.get_account_at_latest_block(
+      channel,
+      # need to get latest block height
+      Flow.Access.GetAccountAtBlockHeightRequest.new(address: address, block_height: 0)
+    )
+  end
+
+  def get_latest_block(channel) do
+    Flow.Access.AccessAPI.Stub.get_latest_block(channel, Flow.Access.GetLatestBlockRequest.new())
+  end
+
+  def execute_script() do
   end
 end

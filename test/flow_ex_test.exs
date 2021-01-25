@@ -2,8 +2,22 @@ defmodule FlowExTest do
   use ExUnit.Case
   doctest FlowEx
 
-  test "pings Flow" do
+  def new_conn() do
+    FlowEx.new(%{url: "localhost:3569"})
+  end
+
+  test "ping" do
     assert {:ok, %Flow.Access.PingResponse{}} ==
-             FlowEx.new(%{endpoint: "localhost:3569"}) |> FlowEx.ping()
+             new_conn() |> FlowEx.ping()
+  end
+
+  @tag disabled: true
+  test "get_account" do
+    assert {:ok, _} = new_conn() |> FlowEx.get_account("0xf8d6e0586b0a20c7")
+  end
+
+  @tag disabled: true
+  test "get_latest_block" do
+    assert {:ok, _} = new_conn() |> FlowEx.get_latest_block()
   end
 end

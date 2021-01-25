@@ -3,13 +3,13 @@
 	"accounts": {
 		"service": {
 			"address": "f8d6e0586b0a20c7",
-			"privateKey": "a4630c0832c36f1b1f9eee471f1d979e384b9d28562ecdf69eb292070a649649",
+			"privateKey": "966ac138855a2659dc9a93616d1d08e5805bc47d215c0c0e138fff534b7cd4bf",
 			"sigAlgorithm": "ECDSA_P256",
 			"hashAlgorithm": "SHA3_256",
 			"keyType": "hex",
 			"keyIndex": 0,
 			"keyContext": {
-				"privateKey": "a4630c0832c36f1b1f9eee471f1d979e384b9d28562ecdf69eb292070a649649"
+				"privateKey": "966ac138855a2659dc9a93616d1d08e5805bc47d215c0c0e138fff534b7cd4bf"
 			}
 		}
 	}

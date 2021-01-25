@@ -1,6 +1,8 @@
-# FlowEx
+# :construction: FlowEx :construction: 
 
-Elixir SDK for the Flow blockchain. For those that desire to build an Elixir app without requiring a Node or Go server sitting in between their blockchain and favorite server language.
+:construction: Not production ready. At all. :construction: 
+
+Elixir SDK for the Flow blockchain. For those that desire to build an Elixir app without requiring a Node or Go server sitting in-between their blockchain and favorite server language.
 
 Short term goals:
 
