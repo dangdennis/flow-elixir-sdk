@@ -13,12 +13,17 @@ defmodule FlowExTest do
 
   @tag disabled: true
   test "get_account" do
-    assert {:ok, _} = new_conn() |> FlowEx.get_account("0xf8d6e0586b0a20c7")
+    {:ok, addr} = Base.decode64("f8d6e0586b0a20c7")
+
+    IO.puts("address bin:")
+    IO.inspect(addr)
+
+    assert {:ok, _} = new_conn() |> FlowEx.get_account(addr)
   end
 
-  @tag disabled: true
+  @tag disabled: false
   test "get_latest_block" do
-    assert {:ok, _} = new_conn() |> FlowEx.get_latest_block()
+    assert {:ok, %Flow.Access.BlockResponse{}} = new_conn() |> FlowEx.get_latest_block()
   end
 
   @tag disabled: true

@@ -14,19 +14,23 @@ defmodule FlowEx do
     channel
   end
 
-  @spec ping(GRPC.Channel.t()) ::
-          {:error, GRPC.RPCError.t()} | {:ok, any} | {:ok, any, map} | GRPC.Client.Stream.t()
   def ping(channel) do
     Flow.Access.AccessAPI.Stub.ping(channel, Flow.Access.PingRequest.new())
   end
 
-  def get_account(channel, address) when is_binary(address) do
-    # query latest block height
+  def get_account(channel, address) do
+    # addr1 = Base.decode16!(address)
+    # addr2 = Base.decode32!(address)
+    # addr3 = Base.decode64!(address)
+
+    # IO.inspect(addr1)
+    # IO.inspect(addr2)
+    # IO.inspect(addr3)
 
     Flow.Access.AccessAPI.Stub.get_account_at_latest_block(
       channel,
       # need to get latest block height
-      Flow.Access.GetAccountAtBlockHeightRequest.new(address: address, block_height: 0)
+      Flow.Access.GetAccountAtLatestBlockRequest.new(address: address)
     )
   end
 
@@ -38,15 +42,6 @@ defmodule FlowEx do
     Flow.Access.AccessAPI.Stub.execute_script_at_latest_block(
       channel,
       Flow.Access.ExecuteScriptAtLatestBlockRequest.new(scripts: scripts, args: args)
-    )
-  end
-
-  def execute_script(channel, scripts) do
-    IO.inspect(scripts)
-
-    Flow.Access.AccessAPI.Stub.execute_script_at_latest_block(
-      channel,
-      Flow.Access.ExecuteScriptAtLatestBlockRequest.new(scripts: scripts)
     )
   end
 end
