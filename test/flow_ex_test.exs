@@ -20,4 +20,15 @@ defmodule FlowExTest do
   test "get_latest_block" do
     assert {:ok, _} = new_conn() |> FlowEx.get_latest_block()
   end
+
+  @tag disabled: true
+  test "execute_scripts" do
+    test_script = """
+    pub fun main(): Int { return 1 }
+    """
+
+    assert {:ok, _} =
+             new_conn()
+             |> FlowEx.execute_script(test_script)
+  end
 end

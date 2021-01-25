@@ -34,6 +34,19 @@ defmodule FlowEx do
     Flow.Access.AccessAPI.Stub.get_latest_block(channel, Flow.Access.GetLatestBlockRequest.new())
   end
 
-  def execute_script() do
+  def execute_script(channel, scripts, args) do
+    Flow.Access.AccessAPI.Stub.execute_script_at_latest_block(
+      channel,
+      Flow.Access.ExecuteScriptAtLatestBlockRequest.new(scripts: scripts, args: args)
+    )
+  end
+
+  def execute_script(channel, scripts) do
+    IO.inspect(scripts)
+
+    Flow.Access.AccessAPI.Stub.execute_script_at_latest_block(
+      channel,
+      Flow.Access.ExecuteScriptAtLatestBlockRequest.new(scripts: scripts)
+    )
   end
 end
