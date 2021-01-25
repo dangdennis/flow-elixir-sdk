@@ -18,19 +18,14 @@ defmodule FlowEx do
     Flow.Access.AccessAPI.Stub.ping(channel, Flow.Access.PingRequest.new())
   end
 
-  def get_account(channel, address) do
-    # addr1 = Base.decode16!(address)
-    # addr2 = Base.decode32!(address)
-    # addr3 = Base.decode64!(address)
-
-    # IO.inspect(addr1)
-    # IO.inspect(addr2)
-    # IO.inspect(addr3)
+  def get_account(channel, address) when is_binary(address) do
+    # Flow works with 16-bit addresses. To decode as 16-bits, we must uppercase any alpha A-F.
+    addr = address |> String.upcase() |> Base.decode16!()
 
     Flow.Access.AccessAPI.Stub.get_account_at_latest_block(
       channel,
       # need to get latest block height
-      Flow.Access.GetAccountAtLatestBlockRequest.new(address: address)
+      Flow.Access.GetAccountAtLatestBlockRequest.new(address: addr)
     )
   end
 
@@ -42,6 +37,13 @@ defmodule FlowEx do
     Flow.Access.AccessAPI.Stub.execute_script_at_latest_block(
       channel,
       Flow.Access.ExecuteScriptAtLatestBlockRequest.new(scripts: scripts, args: args)
+    )
+  end
+
+  def execute_script(channel, scripts) do
+    Flow.Access.AccessAPI.Stub.execute_script_at_latest_block(
+      channel,
+      Flow.Access.ExecuteScriptAtLatestBlockRequest.new(scripts: scripts)
     )
   end
 end

@@ -23,9 +23,6 @@ defmodule FlowEx.MixProject do
     [
       {:grpc, github: "elixir-grpc/grpc"},
       {:protobuf, github: "tony612/protobuf-elixir", override: true},
-      # Only for files generated from Google's protos.
-      # Can be ignored if you don't use Google's protos.
-      # Or you can generate the code by yourself.
       {:google_protos, "~> 0.1"},
       {:cowlib, "~> 2.9.0", override: true},
       {:credo, "~> 1.5", only: [:dev, :test], runtime: false},

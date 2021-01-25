@@ -7,23 +7,19 @@ defmodule FlowExTest do
   end
 
   test "ping" do
-    assert {:ok, %Flow.Access.PingResponse{}} ==
-             new_conn() |> FlowEx.ping()
+    assert {:ok, %Flow.Access.PingResponse{}} == FlowEx.ping(new_conn())
   end
 
-  @tag disabled: true
   test "get_account" do
-    {:ok, addr} = Base.decode64("f8d6e0586b0a20c7")
+    assert {:ok, %Flow.Access.AccountResponse{}} =
+             FlowEx.get_account(new_conn(), "f8d6e0586b0a20c7")
 
-    IO.puts("address bin:")
-    IO.inspect(addr)
-
-    assert {:ok, _} = new_conn() |> FlowEx.get_account(addr)
+    assert {:ok, %Flow.Access.AccountResponse{}} =
+             FlowEx.get_account(new_conn(), "F8D6E0586B0A20C7")
   end
 
-  @tag disabled: false
   test "get_latest_block" do
-    assert {:ok, %Flow.Access.BlockResponse{}} = new_conn() |> FlowEx.get_latest_block()
+    assert {:ok, %Flow.Access.BlockResponse{}} = FlowEx.get_latest_block(new_conn())
   end
 
   @tag disabled: true
@@ -32,8 +28,6 @@ defmodule FlowExTest do
     pub fun main(): Int { return 1 }
     """
 
-    assert {:ok, _} =
-             new_conn()
-             |> FlowEx.execute_script(test_script)
+    assert {:ok, _} = FlowEx.execute_script(new_conn(), test_script)
   end
 end
