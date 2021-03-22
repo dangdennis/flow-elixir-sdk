@@ -107,4 +107,64 @@ defmodule Flex.Decoder do
   def decode(%{"type" => "UFix64", "value" => val}) do
     String.to_float(val)
   end
+
+  def decode(%{"type" => "Array", "value" => val}) do
+    Enum.map(val, fn v ->
+      decode(v)
+    end)
+  end
+
+  def decode(%{"type" => "Dictionary", "value" => [val]}) do
+    key = Map.get(val, "key") |> decode
+    key_value = Map.get(val, "value") |> decode
+
+    %{key => key_value}
+  end
+
+  def decode(%{"type" => "Resource", "value" => val}) do
+    id = Map.get(val, "id")
+
+    fields =
+      Map.get(val, "fields")
+      |> Enum.reduce(%{}, fn %{"name" => name, "value" => value}, acc ->
+        Map.put(acc, name, decode(value))
+      end)
+
+    {:resource, id, fields}
+  end
+
+  def decode(%{
+        "type" => "Path",
+        "value" => %{
+          "domain" => domain,
+          "identifier" => identifier
+        }
+      }) do
+    {:path, domain, identifier}
+  end
+
+  def decode(%{
+        "type" => "Type",
+        "value" => %{
+          "staticType" => static_type
+        }
+      }) do
+    {:type, static_type}
+  end
+
+  def decode(%{
+        "type" => "Capability",
+        "value" => %{
+          "path" => path,
+          "address" => addr,
+          "borrowType" => borrow_type
+        }
+      }) do
+    {:capability,
+     %{
+       path: path,
+       address: addr,
+       borrow_type: borrow_type
+     }}
+  end
 end

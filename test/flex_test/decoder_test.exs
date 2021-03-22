@@ -10,14 +10,14 @@ defmodule FlexTest.Decoder do
            |> Decoder.decode() == 1
   end
 
-  test "void" do
+  test "Void" do
     assert %{
              "type" => "Void"
            }
            |> Decoder.decode() == nil
   end
 
-  test "optional nil" do
+  test "Optional nil" do
     assert %{
              "type" => "Optional",
              "value" => nil
@@ -25,7 +25,7 @@ defmodule FlexTest.Decoder do
            |> Decoder.decode() == nil
   end
 
-  test "optional non-nil" do
+  test "Optional non-nil" do
     assert %{
              "type" => "Optional",
              "value" => %{
@@ -36,7 +36,7 @@ defmodule FlexTest.Decoder do
            |> Decoder.decode() == 123
   end
 
-  test "boolean true" do
+  test "Bool true" do
     assert %{
              "type" => "Bool",
              "value" => true
@@ -52,7 +52,7 @@ defmodule FlexTest.Decoder do
            |> Decoder.decode() == false
   end
 
-  test "string empty" do
+  test "String empty" do
     assert %{
              "type" => "String",
              "value" => ""
@@ -60,7 +60,7 @@ defmodule FlexTest.Decoder do
            |> Decoder.decode() == ""
   end
 
-  test "string exist" do
+  test "String non-empty" do
     assert %{
              "type" => "String",
              "value" => "snargle-blob"
@@ -68,7 +68,7 @@ defmodule FlexTest.Decoder do
            |> Decoder.decode() == "snargle-blob"
   end
 
-  test "address" do
+  test "Address" do
     assert %{
              "type" => "Address",
              "value" => "0x1234"
@@ -198,5 +198,157 @@ defmodule FlexTest.Decoder do
              "value" => "-1312.4121299999999"
            }
            |> Decoder.decode() == -1312.4121299999999
+  end
+
+  test "Array int type" do
+    input = %{
+      "type" => "Array",
+      "value" => [
+        %{
+          "type" => "Int",
+          "value" => "123"
+        },
+        %{
+          "type" => "Int",
+          "value" => "5123"
+        },
+        %{
+          "type" => "Int",
+          "value" => "999"
+        }
+      ]
+    }
+
+    assert input |> Decoder.decode() == [123, 5123, 999]
+  end
+
+  test "Array string type" do
+    input = %{
+      "type" => "Array",
+      "value" => [
+        %{
+          "type" => "String",
+          "value" => "test1"
+        },
+        %{
+          "type" => "String",
+          "value" => "test2"
+        },
+        %{
+          "type" => "String",
+          "value" => "test3"
+        }
+      ]
+    }
+
+    assert input |> Decoder.decode() == ["test1", "test2", "test3"]
+  end
+
+  test "Dictionary" do
+    input1 = %{
+      "type" => "Dictionary",
+      "value" => [
+        %{
+          "key" => %{
+            "type" => "UInt8",
+            "value" => "128"
+          },
+          "value" => %{
+            "type" => "String",
+            "value" => "test"
+          }
+        }
+      ]
+    }
+
+    assert input1 |> Decoder.decode() == %{128 => "test"}
+
+    # Check the nested scenario
+    input2 = %{
+      "type" => "Dictionary",
+      "value" => [
+        %{
+          "key" => %{
+            "type" => "String",
+            "value" => "Wuuzahh"
+          },
+          "value" => input1
+        }
+      ]
+    }
+
+    assert input2 |> Decoder.decode() == %{"Wuuzahh" => %{128 => "test"}}
+  end
+
+  test "Composites (Struct, Resource, Event, Contract, Enum)" do
+    resource_input = %{
+      "type" => "Resource",
+      "value" => %{
+        "id" => "0x3.GreatContract.GreatNFT",
+        "fields" => [
+          %{
+            "name" => "power",
+            "value" => %{"type" => "Int", "value" => "1"}
+          },
+          %{
+            "name" => "gear",
+            "value" => %{"type" => "String", "value" => "Fourth"}
+          }
+        ]
+      }
+    }
+
+    assert resource_input |> Decoder.decode() ==
+             {
+               :resource,
+               "0x3.GreatContract.GreatNFT",
+               %{
+                 "power" => 1,
+                 "gear" => "Fourth"
+               }
+             }
+  end
+
+  test "Path" do
+    input = %{
+      "type" => "Path",
+      "value" => %{
+        # "storage" | "private" | "public",
+        "domain" => "storage",
+        "identifier" => "flowTokenVault"
+      }
+    }
+
+    assert input |> Decoder.decode() == {:path, "storage", "flowTokenVault"}
+  end
+
+  test "Type" do
+    input = %{
+      "type" => "Type",
+      "value" => %{
+        "staticType" => "Int"
+      }
+    }
+
+    assert input |> Decoder.decode() == {:type, "Int"}
+  end
+
+  test "Capability" do
+    input = %{
+      "type" => "Capability",
+      "value" => %{
+        "path" => "/public/someInteger",
+        "address" => "0x1",
+        "borrowType" => "Int"
+      }
+    }
+
+    assert input |> Decoder.decode() ==
+             {:capability,
+              %{
+                path: "/public/someInteger",
+                address: "0x1",
+                borrow_type: "Int"
+              }}
   end
 end
