@@ -2,17 +2,27 @@
 
 :construction: Not production ready. At all. :construction:
 
-Elixir SDK for the Flow blockchain. For those that desire to build an Elixir app without requiring a Node or Go server sitting in-between their blockchain and favorite server language.
+Elixir client SDK for the Flow blockchain. The goal is to have feature-parity with the officially supported JS and Go SDKs. This may mean having an API for common or all gRPC methods defined at https://docs.onflow.org/access-api#block-headers.
 
-Short term goals:
+## Features
 
-1. Read-only operations: i.e. send Cadence scripts to Flow via its gprc gateway.
-2. Listen to Flow events.
+✅ Ping
 
-Long term goals:
+✅ Execute scripts at latest block
 
-1. Encrypt and send transactions
-2. Meet feature parity with JS and Go SDK as necessary.
+✅ Decode JSON-Cadence Data Interchange Format into a suitable Elixir format
+
+🚧 Block Headers
+
+🚧 Blocks
+
+🚧 Scripts
+
+🚧 Events
+
+🚧 Transactions
+
+🚧 Accounts
 
 ## Installation
 
