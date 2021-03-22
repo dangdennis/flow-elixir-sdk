@@ -34,10 +34,10 @@ defmodule Flex.MixProject do
   defp deps do
     [
       {:jason, "~> 1.2"},
-      #   {:grpc, github: "elixir-grpc/grpc"},
-      #   {:google_protos, "~> 0.1"},
-      #   {:protobuf, github: "tony612/protobuf-elixir", override: true},
-      #   {:cowlib, "~> 2.9.0", override: true},
+      {:grpc, github: "elixir-grpc/grpc"},
+      {:google_protos, "~> 0.1"},
+      {:protobuf, github: "tony612/protobuf-elixir", override: true},
+      {:cowlib, "~> 2.9.0", override: true},
       {:credo, "~> 1.5", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 0.5", only: [:dev, :test], runtime: false}
     ]
