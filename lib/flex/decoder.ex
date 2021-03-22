@@ -122,15 +122,28 @@ defmodule Flex.Decoder do
   end
 
   def decode(%{"type" => "Resource", "value" => val}) do
-    id = Map.get(val, "id")
-
-    fields =
-      Map.get(val, "fields")
-      |> Enum.reduce(%{}, fn %{"name" => name, "value" => value}, acc ->
-        Map.put(acc, name, decode(value))
-      end)
-
+    {id, fields} = extract_composite(val)
     {:resource, id, fields}
+  end
+
+  def decode(%{"type" => "Struct", "value" => val}) do
+    {id, fields} = extract_composite(val)
+    {:struct, id, fields}
+  end
+
+  def decode(%{"type" => "Event", "value" => val}) do
+    {id, fields} = extract_composite(val)
+    {:event, id, fields}
+  end
+
+  def decode(%{"type" => "Contract", "value" => val}) do
+    {id, fields} = extract_composite(val)
+    {:contract, id, fields}
+  end
+
+  def decode(%{"type" => "Enum", "value" => val}) do
+    {id, fields} = extract_composite(val)
+    {:enum, id, fields}
   end
 
   def decode(%{
@@ -166,5 +179,13 @@ defmodule Flex.Decoder do
        address: addr,
        borrow_type: borrow_type
      }}
+  end
+
+  defp extract_composite(%{"id" => id, "fields" => fields}) do
+    {id,
+     fields
+     |> Enum.reduce(%{}, fn %{"name" => name, "value" => value}, acc ->
+       Map.put(acc, name, decode(value))
+     end)}
   end
 end

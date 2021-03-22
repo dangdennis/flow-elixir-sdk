@@ -281,7 +281,7 @@ defmodule FlexTest.Decoder do
   end
 
   test "Composites (Struct, Resource, Event, Contract, Enum)" do
-    resource_input = %{
+    resource = %{
       "type" => "Resource",
       "value" => %{
         "id" => "0x3.GreatContract.GreatNFT",
@@ -298,9 +298,117 @@ defmodule FlexTest.Decoder do
       }
     }
 
-    assert resource_input |> Decoder.decode() ==
+    assert resource |> Decoder.decode() ==
              {
                :resource,
+               "0x3.GreatContract.GreatNFT",
+               %{
+                 "power" => 1,
+                 "gear" => "Fourth"
+               }
+             }
+
+    struct = %{
+      "type" => "Struct",
+      "value" => %{
+        "id" => "0x3.GreatContract.GreatNFT",
+        "fields" => [
+          %{
+            "name" => "power",
+            "value" => %{"type" => "Int", "value" => "1"}
+          },
+          %{
+            "name" => "gear",
+            "value" => %{"type" => "String", "value" => "Fourth"}
+          }
+        ]
+      }
+    }
+
+    assert struct |> Decoder.decode() ==
+             {
+               :struct,
+               "0x3.GreatContract.GreatNFT",
+               %{
+                 "power" => 1,
+                 "gear" => "Fourth"
+               }
+             }
+
+    event = %{
+      "type" => "Event",
+      "value" => %{
+        "id" => "0x3.GreatContract.GreatNFT",
+        "fields" => [
+          %{
+            "name" => "power",
+            "value" => %{"type" => "Int", "value" => "1"}
+          },
+          %{
+            "name" => "gear",
+            "value" => %{"type" => "String", "value" => "Fourth"}
+          }
+        ]
+      }
+    }
+
+    assert event |> Decoder.decode() ==
+             {
+               :event,
+               "0x3.GreatContract.GreatNFT",
+               %{
+                 "power" => 1,
+                 "gear" => "Fourth"
+               }
+             }
+
+    contract = %{
+      "type" => "Contract",
+      "value" => %{
+        "id" => "0x3.GreatContract.GreatNFT",
+        "fields" => [
+          %{
+            "name" => "power",
+            "value" => %{"type" => "Int", "value" => "1"}
+          },
+          %{
+            "name" => "gear",
+            "value" => %{"type" => "String", "value" => "Fourth"}
+          }
+        ]
+      }
+    }
+
+    assert contract |> Decoder.decode() ==
+             {
+               :contract,
+               "0x3.GreatContract.GreatNFT",
+               %{
+                 "power" => 1,
+                 "gear" => "Fourth"
+               }
+             }
+
+    enum = %{
+      "type" => "Enum",
+      "value" => %{
+        "id" => "0x3.GreatContract.GreatNFT",
+        "fields" => [
+          %{
+            "name" => "power",
+            "value" => %{"type" => "Int", "value" => "1"}
+          },
+          %{
+            "name" => "gear",
+            "value" => %{"type" => "String", "value" => "Fourth"}
+          }
+        ]
+      }
+    }
+
+    assert enum |> Decoder.decode() ==
+             {
+               :enum,
                "0x3.GreatContract.GreatNFT",
                %{
                  "power" => 1,
