@@ -1,6 +1,6 @@
-defmodule FlowEx do
+defmodule Flex do
   @moduledoc """
-  Documentation for `FlowEx`.
+  Documentation for `Flex`.
   """
 
   @doc """
@@ -8,7 +8,7 @@ defmodule FlowEx do
 
   ## Examples
 
-      iex> FlowEx.hello()
+      iex> Flex.hello()
       :world
 
   """

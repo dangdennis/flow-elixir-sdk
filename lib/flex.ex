@@ -1,8 +1,8 @@
-defmodule FlowEx do
+defmodule Flex do
   use GRPC.Server, service: Flow.Access.AccessAPI.Service
 
   @moduledoc """
-  Documentation for `FlowEx`.
+  Documentation for `Flex`.
   """
 
   @spec new(%{url: binary}) :: GRPC.Channel.t()
@@ -32,12 +32,23 @@ defmodule FlowEx do
     Flow.Access.AccessAPI.Stub.get_latest_block(channel, Flow.Access.GetLatestBlockRequest.new())
   end
 
-  def execute_script(channel, scripts, args \\ []) do
-    scripts |> IO.inspect()
+  @spec execute_script(GRPC.Channel.t(), binary(), []) :: {:ok, any()} | {:error, any()}
+  def execute_script(channel, script, args \\ []) do
+    case Flow.Access.AccessAPI.Stub.execute_script_at_latest_block(
+           channel,
+           Flow.Access.ExecuteScriptAtLatestBlockRequest.new(
+             script: script,
+             args: args
+           )
+         ) do
+      {:ok,
+       %Flow.Access.ExecuteScriptResponse{
+         value: value
+       }} ->
+        Jason.decode(value)
 
-    Flow.Access.AccessAPI.Stub.execute_script_at_latest_block(
-      channel,
-      Flow.Access.ExecuteScriptAtLatestBlockRequest.new(scripts: scripts, args: args)
-    )
+      {:error, err} ->
+        {:error, err}
+    end
   end
 end
