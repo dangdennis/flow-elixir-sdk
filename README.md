@@ -1,6 +1,6 @@
-# :construction: FlowEx :construction: 
+# :construction: 💪 Flex 💪, the Flow Elixir SDK :construction:
 
-:construction: Not production ready. At all. :construction: 
+:construction: Not production ready. At all. :construction:
 
 Elixir SDK for the Flow blockchain. For those that desire to build an Elixir app without requiring a Node or Go server sitting in-between their blockchain and favorite server language.
 
@@ -17,19 +17,19 @@ Long term goals:
 ## Installation
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `flow_ex` to your list of dependencies in `mix.exs`:
+by adding `flex` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
   [
-    {:flow_ex, "~> 0.1.0"}
+    {:flex, "~> 0.1.0"}
   ]
 end
 ```
 
 Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
 and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/flow_ex](https://hexdocs.pm/flow_ex).
+be found at [https://hexdocs.pm/flex](https://hexdocs.pm/flex).
 
 ## Learning Resources
 
@@ -38,12 +38,15 @@ be found at [https://hexdocs.pm/flow_ex](https://hexdocs.pm/flow_ex).
 -   https://www.onflow.org/post/interact-with-flow-using-ruby
 -   https://github.com/elixir-grpc/grpc
 -   https://github.com/elixir-protobuf/protobuf
+-   https://github.com/onflow/flow-emulator/blob/master/README.md#starting-the-server
 
 ## Development
 
 1. Run `git submodule init` initialize the git submodule.
 2. Run `git submodule update --remote` to pull the latest commit (though we expect the contracts to infrequently if ever change).
 3. If there are changes to the Flow contracts, re-generate Elixir code from the protobufs. See [Protobuf Generation](#-Protobuf-Generation).
+4. Install the [Flow CLI](https://docs.onflow.org/flow-cli/install).
+5. Run `flow emulator start`
 
 ## Protobuf Generation
 

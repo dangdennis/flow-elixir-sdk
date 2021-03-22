@@ -204,15 +204,17 @@ defmodule Flow.Access.TransactionResultResponse do
           status: Flow.Entities.TransactionStatus.t(),
           status_code: non_neg_integer,
           error_message: String.t(),
-          events: [Flow.Entities.Event.t()]
+          events: [Flow.Entities.Event.t()],
+          block_id: binary
         }
 
-  defstruct [:status, :status_code, :error_message, :events]
+  defstruct [:status, :status_code, :error_message, :events, :block_id]
 
   field :status, 1, type: Flow.Entities.TransactionStatus, enum: true
   field :status_code, 2, type: :uint32
   field :error_message, 3, type: :string
   field :events, 4, repeated: true, type: Flow.Entities.Event
+  field :block_id, 5, type: :bytes
 end
 
 defmodule Flow.Access.GetAccountRequest do
@@ -429,6 +431,27 @@ defmodule Flow.Access.GetNetworkParametersResponse do
   field :chain_id, 1, type: :string
 end
 
+defmodule Flow.Access.GetLatestProtocolStateSnapshotRequest do
+  @moduledoc false
+  use Protobuf, syntax: :proto3
+  @type t :: %__MODULE__{}
+
+  defstruct []
+end
+
+defmodule Flow.Access.ProtocolStateSnapshotResponse do
+  @moduledoc false
+  use Protobuf, syntax: :proto3
+
+  @type t :: %__MODULE__{
+          serializedSnapshot: binary
+        }
+
+  defstruct [:serializedSnapshot]
+
+  field :serializedSnapshot, 1, type: :bytes
+end
+
 defmodule Flow.Access.AccessAPI.Service do
   @moduledoc false
   use GRPC.Service, name: "flow.access.AccessAPI"
@@ -492,6 +515,10 @@ defmodule Flow.Access.AccessAPI.Service do
   rpc :GetNetworkParameters,
       Flow.Access.GetNetworkParametersRequest,
       Flow.Access.GetNetworkParametersResponse
+
+  rpc :GetLatestProtocolStateSnapshot,
+      Flow.Access.GetLatestProtocolStateSnapshotRequest,
+      Flow.Access.ProtocolStateSnapshotResponse
 end
 
 defmodule Flow.Access.AccessAPI.Stub do
