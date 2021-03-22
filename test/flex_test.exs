@@ -8,12 +8,12 @@ defmodule FlexTest do
     Flex.new(%{url: "localhost:3569"})
   end
 
-  @tag disabled: true
+  @tag disabled: false
   test "ping" do
     assert {:ok, %Flow.Access.PingResponse{}} == Flex.ping(new_conn())
   end
 
-  @tag disabled: true
+  @tag disabled: false
   test "get_account" do
     assert {:ok, %Flow.Access.AccountResponse{}} =
              Flex.get_account(new_conn(), "f8d6e0586b0a20c7")
@@ -22,7 +22,7 @@ defmodule FlexTest do
              Flex.get_account(new_conn(), "F8D6E0586B0A20C7")
   end
 
-  @tag disabled: true
+  @tag disabled: false
   test "get_latest_block" do
     assert {:ok, %Flow.Access.BlockResponse{}} = Flex.get_latest_block(new_conn())
   end
@@ -46,7 +46,7 @@ defmodule FlexTest do
     assert val == 5
   end
 
-  @tag disabled: true
+  @tag disabled: false
   test "execute_scripts error" do
     script = """
     fun main(): Int { return 1 }
