@@ -45,7 +45,9 @@ defmodule Flex do
        %Flow.Access.ExecuteScriptResponse{
          value: value
        }} ->
-        Jason.decode(value)
+        case Jason.decode(value) do
+          {:ok, map} -> {:ok, Flex.Decoder.decode(map)}
+        end
 
       {:error, err} ->
         {:error, err}

@@ -2,6 +2,8 @@ defmodule FlexTest do
   use ExUnit.Case
   doctest Flex
 
+  alias FlexT
+
   def new_conn() do
     Flex.new(%{url: "localhost:3569"})
   end
@@ -26,13 +28,22 @@ defmodule FlexTest do
   end
 
   @tag disabled: false
-  test "execute_scripts ok" do
+  test "execute_scripts returns" do
     script = """
     pub fun main(): Int { return 1 }
     """
 
     assert {:ok, val} = Flex.execute_script(new_conn(), script)
-    assert val = 1
+    assert val == 1
+  end
+
+  test "execute_scripts returns expected number" do
+    script = """
+    pub fun main(): Int { return 5 }
+    """
+
+    assert {:ok, val} = Flex.execute_script(new_conn(), script)
+    assert val == 5
   end
 
   @tag disabled: true
