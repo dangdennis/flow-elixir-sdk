@@ -1,4 +1,4 @@
-# 💪 Flex 💪 the Flow Elixir SDK
+# Flex 💪 the Flow Elixir SDK
 
 :construction: Not production ready. At all. :construction:
 

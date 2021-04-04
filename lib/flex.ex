@@ -53,4 +53,27 @@ defmodule Flex do
         {:error, err}
     end
   end
+
+  # GRPC.Channel.t()
+  def get_events_for_height_range(channel, start_height, end_height) do
+    case(
+      Flow.Access.AccessAPI.Stub.get_events_for_height_range(
+        channel,
+        Flow.Access.GetEventsForHeightRangeRequest.new(
+          type: "MomentPriceChanged",
+          start_height: start_height,
+          end_height: end_height
+        )
+      )
+    ) do
+      {:ok,
+       %Flow.Access.EventsResponse{
+         results: results
+       }} ->
+        IO.inspect(results)
+
+      {:error, err} ->
+        {:error, err}
+    end
+  end
 end
