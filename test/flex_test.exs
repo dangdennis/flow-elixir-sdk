@@ -17,16 +17,16 @@ defmodule FlexTest do
 
   @tag disabled: false
   test "get_account" do
-    assert {:ok, %Flow.Access.AccountResponse{}} =
-             Flex.get_account(emulator_conn(), "f8d6e0586b0a20c7")
+    assert {:ok, %Flow.Entities.Account{}} =
+             Flex.get_account(emulator_conn(), "0xf8d6e0586b0a20c7")
 
-    assert {:ok, %Flow.Access.AccountResponse{}} =
-             Flex.get_account(emulator_conn(), "F8D6E0586B0A20C7")
+    assert {:ok, %Flow.Entities.Account{}} =
+             Flex.get_account(emulator_conn(), "0XF8D6E0586B0A20C7")
   end
 
   @tag disabled: false
   test "get_latest_block" do
-    assert {:ok, %Flow.Access.BlockResponse{}} = Flex.get_latest_block(emulator_conn())
+    assert {:ok, %Flow.Entities.Block{}} = Flex.get_latest_block(emulator_conn())
   end
 
   @tag disabled: false
@@ -77,5 +77,15 @@ defmodule FlexTest do
   test "get_network_parameters returns chain id" do
     assert {:ok, %Flow.Access.GetNetworkParametersResponse{chain_id: "flow-emulator"}} =
              Flex.get_network_parameters(emulator_conn())
+  end
+
+  @tag disabled: false
+  test "create_account creates a Flow account successfully" do
+    # {:ok, acc} =
+    Flex.create_account(emulator_conn(), %{
+      address: "0xf8d6e0586b0a20c7",
+      key_index: 0,
+      private_key: "99387674de6cd599c814753b6987c8f3dd1ac3c1b761a4b2b4ce47727d005b83"
+    })
   end
 end
