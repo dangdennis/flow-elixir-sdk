@@ -165,6 +165,8 @@ defmodule Flex do
     #   })
 
     # transaction |> IO.inspect()
+
+    # request = Flow.Access.SendTransactionRequest.new(%{transaction: transaction})
   end
 
   #   def send_transaction(channel, ) do
